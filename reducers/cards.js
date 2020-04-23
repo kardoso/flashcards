@@ -13,5 +13,7 @@ export default function cards(state = {}, action) {
           }),
         },
       }
+    default:
+      return state
   }
 }
