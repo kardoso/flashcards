@@ -1,13 +1,21 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native'
+import { connect } from 'react-redux'
+import { handleInitialData } from './actions/shared'
 import CardPage from './components/CardPage'
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <CardPage />
-    </View>
-  )
+class App extends Component {
+  componentDidMount() {
+    this.props.dispatch(handleInitialData())
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <CardPage />
+      </View>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
@@ -18,3 +26,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#1b1d20',
   },
 })
+
+export default connect()(App)
