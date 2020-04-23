@@ -2,16 +2,12 @@ let decks = {
   '8xf0y6ziyjabvozdd253nd': {
     id: '8xf0y6ziyjabvozdd253nd',
     name: 'Sample Deck',
-    cards: ['m1lws477u4c6yg8ylqlc7o'],
-  },
-}
-
-let cards = {
-  m1lws477u4c6yg8ylqlc7o: {
-    id: 'm1lws477u4c6yg8ylqlc7o',
-    deckId: '8xf0y6ziyjabvozdd253nd',
-    question: "What's the result of 2 + 2?",
-    answer: '4',
+    cards: [
+      {
+        question: "What's the result of 2 + 2?",
+        answer: '4',
+      },
+    ],
   },
 }
 
@@ -25,12 +21,6 @@ function generateUID() {
 export function _getDecks() {
   return new Promise((res, rej) => {
     setTimeout(() => res({ ...decks }), 1000)
-  })
-}
-
-export function _getCards() {
-  return new Promise((res, rej) => {
-    setTimeout(() => res({ ...cards }), 1000)
   })
 }
 
@@ -57,35 +47,35 @@ export function _saveDeck(deck) {
   })
 }
 
-function formatCard({ deckId, question, answer }) {
-  return {
-    id: generateUID(),
-    deckId,
-    question,
-    answer,
-  }
-}
-
-export function _saveCard(card) {
+function _deleteDeck(deckId) {
   return new Promise((res, rej) => {
-    const deckId = card.deckId
-    const formattedCard = formatCard(card)
+    const { [deckId]: omit, ...newDecks } = decks
 
     setTimeout(() => {
-      cards = {
-        ...cards,
-        [formattedCard.id]: formattedCard,
+      decks = {
+        ...newDecks,
       }
+    }, 1000)
 
+    res(newDecks)
+  })
+}
+
+export function _saveCard({ deckId, question, answer }) {
+  return new Promise((res, rej) => {
+    setTimeout(() => {
       decks = {
         ...decks,
         [deckId]: {
           ...decks[deckId],
-          cards: decks[deckId].cards.concat([formattedCard.id]),
+          cards: decks[deckId].cards.concat({
+            question,
+            answer,
+          }),
         },
       }
 
-      res(formattedCard)
+      res({ question, answer })
     }, 1000)
   })
 }
