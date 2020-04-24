@@ -8,6 +8,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import DashBoard from './components/DashBoard'
 import NewDeck from './components/NewDeck'
 import DeckPage from './components/DeckPage'
+import NewCard from './components/NewCard'
 
 const Tabs = createBottomTabNavigator()
 const HomeStack = createStackNavigator()
@@ -27,9 +28,24 @@ const HomeStackScreen = () => (
         },
       }}
     />
+
     <HomeStack.Screen
       name="Deck"
       component={DeckPage}
+      options={{
+        headerStyle: {
+          backgroundColor: '#333435',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}
+    />
+
+    <HomeStack.Screen
+      name="NewCard"
+      component={NewCard}
       options={{
         headerStyle: {
           backgroundColor: '#333435',

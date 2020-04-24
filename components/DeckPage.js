@@ -24,7 +24,10 @@ class DeckPage extends Component {
 
   handleAddCard = (e) => {
     e.preventDefault()
-    // TODO: Go to add card stack
+
+    const { navigation, deckId } = this.props
+
+    navigation.push('NewCard', { deckId })
   }
 
   handleDeleteDeck = (e) => {
