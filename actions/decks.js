@@ -35,7 +35,7 @@ export function removeDeck(id) {
 
 export function handleRemoveDeck(id) {
   return (dispatch) => {
-    deleteDeck(id).then(() => {
+    return deleteDeck(id).then(() => {
       dispatch(removeDeck(id))
     })
   }
