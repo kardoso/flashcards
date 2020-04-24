@@ -30,8 +30,12 @@ class NewDeck extends Component {
   saveDeck = async (e) => {
     e.preventDefault()
 
-    const { dispatch } = this.props
+    this.setState(() => ({ name: '' }))
+
+    const { dispatch, navigation } = this.props
     dispatch(handleAddDeck({ name: this.state.name }))
+
+    navigation.navigate('Decks')
   }
 
   render() {
