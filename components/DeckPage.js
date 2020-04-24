@@ -30,10 +30,11 @@ class DeckPage extends Component {
   handleDeleteDeck = (e) => {
     e.preventDefault()
 
-    const { dispatch, id } = this.props
-    dispatch(handleRemoveDeck(id))
+    const { dispatch, deckId, navigation } = this.props
 
-    // TODO: Return to Decks stack
+    dispatch(handleRemoveDeck(deckId))
+
+    navigation.goBack()
   }
 
   render() {
@@ -134,14 +135,19 @@ const styles = StyleSheet.create({
   },
 })
 
-function mapStateToProps({ decks }, { id }) {
+function mapStateToProps({ decks }, { route }) {
   //TODO: Remove the forced id
-  const deck = id !== null ? decks[id] : decks['8xf0y6ziyjabvozdd253nd']
+  const deck = decks[route.params.id]
+  if (Object.keys(decks).includes(deck.id)) {
+    const deckId = deck.id
+    const name = deck.name
+    const cardsCount = deck.cards.length
 
-  return {
-    id: deck.id,
-    name: deck.name,
-    cardsCount: deck.cards.length,
+    return {
+      deckId,
+      name,
+      cardsCount,
+    }
   }
 }
 
