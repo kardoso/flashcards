@@ -1,17 +1,47 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, StatusBar } from 'react-native'
-import Constants from 'expo-constants'
+import { StatusBar } from 'react-native'
 import { connect } from 'react-redux'
 import { handleInitialData } from './actions/shared'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import DashBoard from './components/DashBoard'
+import NewDeck from './components/NewDeck'
+import DeckPage from './components/DeckPage'
 
-function AppStatusBar({ backgroundColor, ...props }) {
-  return (
-    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
-      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
-    </View>
-  )
-}
+const Tabs = createBottomTabNavigator()
+const HomeStack = createStackNavigator()
+
+const HomeStackScreen = () => (
+  <HomeStack.Navigator screenOptions={{ headerShown: true }}>
+    <HomeStack.Screen
+      name="Decks"
+      component={DashBoard}
+      options={{
+        headerStyle: {
+          backgroundColor: '#333435',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}
+    />
+    <HomeStack.Screen
+      name="Deck"
+      component={DeckPage}
+      options={{
+        headerStyle: {
+          backgroundColor: '#333435',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}
+    />
+  </HomeStack.Navigator>
+)
 
 class App extends Component {
   componentDidMount() {
@@ -20,21 +50,15 @@ class App extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <AppStatusBar backgroundColor={'#1b1d20'} barStyle="light-content" />
-        <DashBoard />
-      </View>
+      <NavigationContainer>
+        <StatusBar />
+        <Tabs.Navigator>
+          <Tabs.Screen name="Decks" component={HomeStackScreen} />
+          <Tabs.Screen name="New" component={NewDeck} />
+        </Tabs.Navigator>
+      </NavigationContainer>
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#1b1d20',
-  },
-})
 
 export default connect()(App)
