@@ -19,7 +19,7 @@ export default function decks(state = {}, action) {
         [action.deck.id]: action.deck,
       }
     case REMOVE_DECK:
-      let filtered = Object.keys(state).filter((k) => state[k].id === action.id)
+      let filtered = Object.keys(state).filter((k) => state[k].id !== action.id)
       let result = {}
       for (let i = 0; i < filtered.length; i++) {
         result = { ...result, [filtered[i]]: state[filtered[i]] }
