@@ -33,7 +33,7 @@ class CardPage extends Component {
 
   render() {
     return (
-      <View style={styles.center}>
+      <View style={styles.container}>
         <Card frontText="Question" backText="Answer" />
         <View style={styles.buttonsContainer}>
           <Button text="Previous" onPress={this.handlePrevious} />
@@ -78,12 +78,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
   },
-  center: {
+  container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 30,
-    marginLeft: 30,
+    paddingRight: 30,
+    paddingLeft: 30,
+    backgroundColor: '#1b1d20',
   },
 })
 
