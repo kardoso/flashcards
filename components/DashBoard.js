@@ -36,22 +36,26 @@ class DashBoard extends Component {
   handleLoadDeck = (id) => {
     // TODO: Redirect to deck page
     console.log('Still to implement')
+    this.props.navigation.push('Deck', { id })
   }
 
   render() {
+    const { decks } = this.props
     return (
       <View style={styles.container}>
         <FlatList
-          data={Object.keys(this.props.decks)}
-          keyExtractor={(item) => this.props.decks[item].id}
-          renderItem={({ item }) => (
-            <DeckItem
-              deckId={this.props.decks[item].id}
-              name={this.props.decks[item].name}
-              itemsAmount={this.props.decks[item].cards.length}
-              onPress={this.handleLoadDeck}
-            />
-          )}
+          data={Object.keys(decks)}
+          keyExtractor={(item) => decks[item].id}
+          renderItem={({ item }) => {
+            return (
+              <DeckItem
+                deckId={decks[item].id}
+                name={decks[item].name}
+                itemsAmount={decks[item].cards.length}
+                onPress={() => this.handleLoadDeck(decks[item].id)}
+              />
+            )
+          }}
         />
       </View>
     )
