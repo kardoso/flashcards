@@ -6,8 +6,21 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native'
+import { BoxShadow } from 'react-native-shadow'
 import { connect } from 'react-redux'
 import { handleAddDeck } from '../actions/decks'
+
+const shadowOpt = {
+  width: 300,
+  height: 65,
+  color: '#8a61cc',
+  border: 2,
+  radius: 16,
+  opacity: 0.45,
+  x: 0,
+  y: 3,
+  style: { marginTop: 60 },
+}
 
 class NewDeck extends Component {
   state = {
@@ -31,9 +44,12 @@ class NewDeck extends Component {
           value={this.state.name}
           maxLength={32}
         />
-        <TouchableOpacity style={styles.button} onPress={this.saveDeck}>
-          <Text style={styles.buttonText}>Submit</Text>
-        </TouchableOpacity>
+
+        <BoxShadow setting={shadowOpt}>
+          <TouchableOpacity style={styles.button} onPress={this.saveDeck}>
+            <Text style={styles.buttonText}>Submit</Text>
+          </TouchableOpacity>
+        </BoxShadow>
       </View>
     )
   }
@@ -59,14 +75,10 @@ const styles = StyleSheet.create({
   button: {
     width: 300,
     backgroundColor: '#8a61cc',
-    padding: 30,
     borderRadius: 16,
-    height: 45,
-    marginLeft: 10,
-    marginRight: 10,
+    height: 65,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 60,
   },
   buttonText: {
     color: '#fff',
