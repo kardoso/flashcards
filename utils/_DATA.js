@@ -9,6 +9,16 @@ let decks = {
       },
     ],
   },
+  '9xf0y6ziyjabvozdd253nd': {
+    id: '9xf0y6ziyjabvozdd253nd',
+    name: 'Sample Deck',
+    cards: [
+      {
+        question: "What's the result of 2 + 2?",
+        answer: '4',
+      },
+    ],
+  },
 }
 
 function generateUID() {
@@ -47,17 +57,19 @@ export function _saveDeck(deck) {
   })
 }
 
-function _deleteDeck(deckId) {
-  return new Promise((res, rej) => {
-    const { [deckId]: omit, ...newDecks } = decks
+function removeKey(obj, deleteKey) {
+  let clone = Object.assign({}, obj)
+  delete clone[deleteKey]
+  return clone
+}
 
+export function _deleteDeck(deckId) {
+  return new Promise((res, rej) => {
     setTimeout(() => {
-      decks = {
-        ...newDecks,
-      }
+      decks = removeKey(decks, deckId)
     }, 1000)
 
-    res(newDecks)
+    res(decks)
   })
 }
 
