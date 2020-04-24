@@ -51,7 +51,7 @@ class App extends Component {
   render() {
     return (
       <NavigationContainer>
-        <StatusBar />
+        <StatusBar translucent barStyle={'light-content'} />
         <Tabs.Navigator>
           <Tabs.Screen name="Decks" component={HomeStackScreen} />
           <Tabs.Screen name="New" component={NewDeck} />
