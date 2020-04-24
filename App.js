@@ -1,8 +1,17 @@
 import React, { Component } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, StatusBar } from 'react-native'
+import Constants from 'expo-constants'
 import { connect } from 'react-redux'
 import { handleInitialData } from './actions/shared'
-import CardPage from './components/CardPage'
+import DashBoard from './components/DashBoard'
+
+function AppStatusBar({ backgroundColor, ...props }) {
+  return (
+    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
+      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+    </View>
+  )
+}
 
 class App extends Component {
   componentDidMount() {
@@ -12,7 +21,8 @@ class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <CardPage />
+        <AppStatusBar backgroundColor={'#1b1d20'} barStyle="light-content" />
+        <DashBoard />
       </View>
     )
   }
