@@ -66,10 +66,15 @@ function removeKey(obj, deleteKey) {
 export function _deleteDeck(deckId) {
   return new Promise((res, rej) => {
     setTimeout(() => {
-      decks = removeKey(decks, deckId)
-    }, 1000)
+      let filtered = Object.keys(decks).filter((k) => decks[k].id !== deckId)
+      let result = {}
+      filtered.forEach(
+        (id) => (result = { ...result, [filtered[id]]: decks[filtered[id]] })
+      )
+      decks = decks
 
-    res(decks)
+      res(decks)
+    }, 1000)
   })
 }
 
