@@ -17,6 +17,10 @@ const shadowOpt = {
 }
 
 class DeckPage extends Component {
+  state = {
+    deleteDisabled: false,
+  }
+
   handleStartQuiz = (e) => {
     e.preventDefault()
     // TODO: Go to quiz stack
@@ -30,18 +34,22 @@ class DeckPage extends Component {
     navigation.push('NewCard', { deckId })
   }
 
-  handleDeleteDeck = (e) => {
+  handleDeleteDeck = async (e) => {
     e.preventDefault()
+    this.setState(() => ({deleteDisabled: true}))
 
-    const { dispatch, deckId, navigation } = this.props
+    const { dispatch, deckId, route, navigation } = this.props
 
-    dispatch(handleRemoveDeck(deckId))
+    await dispatch(handleRemoveDeck(deckId ?? route.params.id))
 
     navigation.goBack()
   }
 
   render() {
-    const { name, cardsCount } = this.props
+    const { name, cardsCount, loading } = this.props
+    if (loading === true) {
+      return null
+    }
     return (
       <View style={styles.container}>
         <Text style={styles.title}>{name}</Text>
@@ -70,6 +78,7 @@ class DeckPage extends Component {
         <TouchableOpacity
           style={[styles.button, styles.btnDelete]}
           onPress={this.handleDeleteDeck}
+          disabled={this.state.deleteDisabled}
         >
           <Text style={[styles.buttonText, styles.txtDelete]}>Delete Deck</Text>
         </TouchableOpacity>
@@ -138,10 +147,10 @@ const styles = StyleSheet.create({
   },
 })
 
-function mapStateToProps({ decks }, { route }) {
+function mapStateToProps({ decks }, props) {
   //TODO: Remove the forced id
-  const deck = decks[route.params.id]
-  if (Object.keys(decks).includes(deck.id)) {
+  const deck = decks[props.route.params.id]
+  if (typeof deck !== 'undefined') {
     const deckId = deck.id
     const name = deck.name
     const cardsCount = deck.cards.length
