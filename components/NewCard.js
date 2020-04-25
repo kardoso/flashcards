@@ -67,7 +67,7 @@ class NewCard extends Component {
             onPress={this.saveCard}
             disabled={this.state.submitEnabled}
           >
-            <Text style={styles.buttonText}>Submit</Text>
+            <Text style={styles.buttonText}>Add Card</Text>
           </TouchableOpacity>
         </BoxShadow>
       </View>
