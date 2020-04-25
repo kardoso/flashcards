@@ -25,6 +25,8 @@ class DeckPage extends Component {
   handleStartQuiz = (e) => {
     e.preventDefault()
     // TODO: Go to quiz stack
+    const { navigation, deckId } = this.props
+    navigation.push('Quiz')
   }
 
   handleAddCard = async (e) => {

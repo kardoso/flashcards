@@ -33,10 +33,10 @@ function DeckItem({ deckId, name, itemsAmount, onPress }) {
 }
 
 class DashBoard extends Component {
-  handleLoadDeck = (id) => {
+  handleLoadDeck = (id, name) => {
     // TODO: Redirect to deck page
     console.log('Still to implement')
-    this.props.navigation.push('Deck', { id })
+    this.props.navigation.push('Deck', { id, name })
   }
 
   render() {
@@ -52,7 +52,9 @@ class DashBoard extends Component {
                 deckId={decks[item].id}
                 name={decks[item].name}
                 itemsAmount={decks[item].cards.length}
-                onPress={() => this.handleLoadDeck(decks[item].id)}
+                onPress={() =>
+                  this.handleLoadDeck(decks[item].id, decks[item].name)
+                }
               />
             )
           }}
