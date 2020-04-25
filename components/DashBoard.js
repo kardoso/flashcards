@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 import { BoxShadow } from 'react-native-shadow'
 import { connect } from 'react-redux'
+import Constants from 'expo-constants'
 
 const shadowOpt = {
   width: 300,
@@ -17,7 +18,7 @@ const shadowOpt = {
   radius: 16,
   opacity: 0.45,
   x: 0,
-  y: 3,
+  y: 23,
   style: { marginBottom: 30 },
 }
 
@@ -44,6 +45,9 @@ class DashBoard extends Component {
     return (
       <View style={styles.container}>
         <FlatList
+          style={styles.list}
+          contentContainerStyle={styles.centerList}
+          showsVerticalScrollIndicator={false}
           data={Object.keys(decks)}
           keyExtractor={(item) => decks[item].id}
           renderItem={({ item }) => {
@@ -69,9 +73,17 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 30,
-    paddingBottom: 30,
+    marginTop: Constants.statusBarHeight,
     backgroundColor: '#1b1d20',
+    width: '100%',
+  },
+  list: {
+    width: '100%',
+  },
+  centerList: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   btn: {
     width: 300,
@@ -82,7 +94,9 @@ const styles = StyleSheet.create({
     paddingLeft: 40,
     paddingRight: 40,
     borderRadius: 16,
+    marginTop: 20,
     marginBottom: 30,
+    alignSelf: 'center',
   },
   textTitle: {
     fontSize: 18,
