@@ -25,16 +25,17 @@ const shadowOpt = {
 class NewDeck extends Component {
   state = {
     name: '',
+    submitDisabled: false,
   }
 
   saveDeck = async (e) => {
     e.preventDefault()
-
-    this.setState(() => ({ name: '' }))
+    this.setState(() => ({ name: '', submitDisabled: true }))
 
     const { dispatch, navigation } = this.props
-    dispatch(handleAddDeck({ name: this.state.name }))
+    await dispatch(handleAddDeck({ name: this.state.name }))
 
+    this.setState(() => ({ name: '', submitDisabled: false }))
     navigation.navigate('Decks')
   }
 
@@ -50,7 +51,11 @@ class NewDeck extends Component {
         />
 
         <BoxShadow setting={shadowOpt}>
-          <TouchableOpacity style={styles.button} onPress={this.saveDeck}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={this.saveDeck}
+            disabled={this.state.submitDisabled}
+          >
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
         </BoxShadow>
