@@ -20,13 +20,19 @@ class DeckPage extends Component {
   state = {
     deleteDisabled: false,
     addCardDisabled: false,
+    startQuizDisabled: false,
   }
 
-  handleStartQuiz = (e) => {
+  handleStartQuiz = async (e) => {
     e.preventDefault()
-    // TODO: Go to quiz stack
+    this.setState(() => ({ startQuizDisabled: true }))
+
     const { navigation, deckId } = this.props
-    navigation.push('Quiz')
+
+    navigation.push('Quiz', { deckId })
+
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+    this.setState(() => ({ addCardDisabled: false }))
   }
 
   handleAddCard = async (e) => {
@@ -43,7 +49,11 @@ class DeckPage extends Component {
 
   handleDeleteDeck = async (e) => {
     e.preventDefault()
-    this.setState(() => ({ deleteDisabled: true }))
+    this.setState(() => ({
+      deleteDisabled: true,
+      startQuizDisabled: true,
+      addCardDisabled: true,
+    }))
 
     const { dispatch, deckId, route, navigation } = this.props
 
@@ -53,10 +63,7 @@ class DeckPage extends Component {
   }
 
   render() {
-    const { name, cardsCount, loading } = this.props
-    if (loading === true) {
-      return null
-    }
+    const { name, cardsCount } = this.props
     return (
       <View style={styles.container}>
         <Text style={styles.title}>{name}</Text>
@@ -68,6 +75,7 @@ class DeckPage extends Component {
           <TouchableOpacity
             style={[styles.button, styles.btnStart]}
             onPress={this.handleStartQuiz}
+            disabled={this.state.startQuizDisabled}
           >
             <Text style={styles.buttonText}>Start Quiz</Text>
           </TouchableOpacity>
