@@ -9,16 +9,6 @@ let decks = {
       },
     ],
   },
-  '9xf0y6ziyjabvozdd253nd': {
-    id: '9xf0y6ziyjabvozdd253nd',
-    name: 'Sample Deck',
-    cards: [
-      {
-        question: "What's the result of 2 + 2?",
-        answer: '4',
-      },
-    ],
-  },
 }
 
 function generateUID() {
