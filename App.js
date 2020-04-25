@@ -9,7 +9,7 @@ import DashBoard from './components/DashBoard'
 import NewDeck from './components/NewDeck'
 import DeckPage from './components/DeckPage'
 import NewCard from './components/NewCard'
-import CardPage from './components/CardPage'
+import Quiz from './components/Quiz'
 
 const Tabs = createBottomTabNavigator()
 const HomeStack = createStackNavigator()
@@ -64,7 +64,7 @@ const HomeStackScreen = () => (
 
     <HomeStack.Screen
       name="Quiz"
-      component={CardPage}
+      component={Quiz}
       options={{
         headerTitle: 'Quiz',
         headerStyle: {

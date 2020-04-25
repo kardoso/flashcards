@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Platform,
 } from 'react-native'
+import { connect } from 'react-redux'
 import Card from './Card'
 
 function Button({ text, onPress }) {
@@ -34,7 +35,7 @@ class CardPage extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Card frontText="Question" backText="Answer" />
+        <Card frontText={this.props.cards} backText="Answer" />
         <View style={styles.buttonsContainer}>
           <Button text="Previous" onPress={this.handlePrevious} />
           <Button text="Next" onPress={this.handleNext} />
@@ -88,4 +89,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default CardPage
+export default connect()(CardPage)
