@@ -85,14 +85,17 @@ export function _saveCard({ deckId, question, answer }) {
         ...decks,
         [deckId]: {
           ...decks[deckId],
-          cards: decks[deckId].cards.concat({
-            question,
-            answer,
-          }),
+          cards: decks[deckId].cards.concat([
+            [
+              {
+                question,
+                answer,
+              },
+            ],
+          ]),
         },
       }
-
-      res({ question, answer })
+      res(decks)
     }, 1000)
   })
 }
