@@ -64,12 +64,28 @@ class App extends Component {
     this.props.dispatch(handleInitialData())
   }
 
+  getTabBarVisibility(route) {
+    const routeName = route.state
+      ? route.state.routes[route.state.index].name
+      : ''
+    if (['Deck', 'NewCard', 'Quiz'].includes(routeName)) {
+      return false
+    }
+    return true
+  }
+
   render() {
     return (
       <NavigationContainer>
         <StatusBar translucent barStyle={'light-content'} />
         <Tabs.Navigator>
-          <Tabs.Screen name="Decks" component={HomeStackScreen} />
+          <Tabs.Screen
+            name="Decks"
+            component={HomeStackScreen}
+            options={({ route }) => ({
+              tabBarVisible: this.getTabBarVisibility(route),
+            })}
+          />
           <Tabs.Screen name="New" component={NewDeck} />
         </Tabs.Navigator>
       </NavigationContainer>
