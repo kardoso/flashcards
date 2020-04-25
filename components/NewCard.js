@@ -26,10 +26,12 @@ class NewCard extends Component {
   state = {
     question: '',
     answer: '',
+    submitDisabled: false,
   }
 
   saveCard = async (e) => {
     e.preventDefault()
+    this.setState(() => ({ submitEnabled: true }))
 
     const { question, answer } = this.state
     const { dispatch, navigation, deckId } = this.props
@@ -60,7 +62,11 @@ class NewCard extends Component {
         />
 
         <BoxShadow setting={shadowOpt}>
-          <TouchableOpacity style={styles.button} onPress={this.saveCard}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={this.saveCard}
+            disabled={this.state.submitEnabled}
+          >
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
         </BoxShadow>
