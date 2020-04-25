@@ -19,6 +19,7 @@ const shadowOpt = {
 class DeckPage extends Component {
   state = {
     deleteDisabled: false,
+    addCardDisabled: false,
   }
 
   handleStartQuiz = (e) => {
@@ -26,17 +27,21 @@ class DeckPage extends Component {
     // TODO: Go to quiz stack
   }
 
-  handleAddCard = (e) => {
+  handleAddCard = async (e) => {
     e.preventDefault()
+    this.setState(() => ({ addCardDisabled: true }))
 
     const { navigation, deckId } = this.props
 
     navigation.push('NewCard', { deckId })
+
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+    this.setState(() => ({ addCardDisabled: false }))
   }
 
   handleDeleteDeck = async (e) => {
     e.preventDefault()
-    this.setState(() => ({deleteDisabled: true}))
+    this.setState(() => ({ deleteDisabled: true }))
 
     const { dispatch, deckId, route, navigation } = this.props
 
@@ -70,6 +75,7 @@ class DeckPage extends Component {
           <TouchableOpacity
             style={[styles.button, styles.btnAdd]}
             onPress={this.handleAddCard}
+            disabled={this.state.addCardDisabled}
           >
             <Text style={styles.buttonText}>Add Card</Text>
           </TouchableOpacity>
