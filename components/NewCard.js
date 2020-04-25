@@ -28,17 +28,17 @@ class NewCard extends Component {
     answer: '',
   }
 
-  saveDeck = async (e) => {
+  saveCard = async (e) => {
     e.preventDefault()
+
+    const { question, answer } = this.state
+    const { dispatch, navigation, deckId } = this.props
+
+    await dispatch(handleAddCard(deckId, question, answer))
 
     this.setState(() => ({ question: '', answer: '' }))
 
-    const { dispatch, navigation, route } = this.props
-    dispatch(
-      handleAddCard({ deckId: route.params.deckId, question: '', answer: '' })
-    )
-
-    navigation.navigate('Deck', { id: route.params.deckId })
+    navigation.navigate('Deck', { deckId })
   }
 
   render() {
@@ -60,7 +60,7 @@ class NewCard extends Component {
         />
 
         <BoxShadow setting={shadowOpt}>
-          <TouchableOpacity style={styles.button} onPress={this.saveDeck}>
+          <TouchableOpacity style={styles.button} onPress={this.saveCard}>
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
         </BoxShadow>
@@ -107,4 +107,10 @@ const styles = StyleSheet.create({
   },
 })
 
-export default connect()(NewCard)
+function mapStateToProps({}, { route }) {
+  return {
+    deckId: route.params.deckId,
+  }
+}
+
+export default connect(mapStateToProps)(NewCard)
