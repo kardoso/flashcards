@@ -9,53 +9,161 @@ import {
 import { connect } from 'react-redux'
 import Card from './Card'
 
-function Button({ text, onPress, disable }) {
+function Button({ text, onPress, fail, success, restart }) {
   return (
     <TouchableOpacity
       onPress={onPress}
       style={[
         Platform.OS === 'ios' ? styles.iosBtn : styles.androidBtn,
-        disable && styles.disabledBtn,
+        fail && styles.failBtn,
+        success && styles.successBtn,
+        restart && styles.restartBtn,
       ]}
     >
-      <Text style={styles.BtnText}>{text}</Text>
+      <Text style={styles.label}>{text}</Text>
     </TouchableOpacity>
   )
+}
+
+const quizState = {
+  notRevealed: 'notRevealed',
+  revealed: 'revealed',
+  markGuess: 'markGuess',
+  ended: 'ended',
 }
 
 class Quiz extends Component {
   state = {
     cardIndex: 0,
+    flip: false,
+    quizState: quizState.notRevealed,
+    failCount: 0,
+    successCount: 0,
   }
 
-  handlePrevious = () => {
-    this.setState(() => ({ cardIndex: this.state.cardIndex - 1 }))
-    console.log(this.state)
+  handleGuess = async (guess) => {
+    this.setState(() => ({
+      flip: false,
+    }))
+    if (guess === true) {
+      this.setState(() => ({
+        successCount: this.state.successCount + 1,
+        flip: false,
+      }))
+    } else {
+      this.setState(() => ({
+        failCount: this.state.failCount + 1,
+        flip: false,
+      }))
+    }
+    this.setState(() => ({
+      quizState:
+        this.state.cardIndex + 1 === this.props.cardsCount
+          ? quizState.ended
+          : quizState.notRevealed,
+    }))
+    await new Promise((resolve) => setTimeout(resolve, 100))
+    this.setState(() => ({
+      cardIndex: this.state.cardIndex + 1,
+    }))
   }
 
-  handleNext = () => {
-    this.setState(() => ({ cardIndex: this.state.cardIndex + 1 }))
-    console.log(this.state)
+  handleRestart = () => {
+    this.setState(() => ({
+      cardIndex: 0,
+      flip: false,
+      quizState: quizState.notRevealed,
+      failCount: 0,
+      successCount: 0,
+    }))
+  }
+
+  handleFinish = () => {
+    const { navigation } = this.props
+
+    navigation.goBack()
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Card
-          frontText={this.props.cards[this.state.cardIndex].question}
-          backText={this.props.cards[this.state.cardIndex].answer}
-        />
-        <View style={styles.buttonsContainer}>
-          <Button
-            text="Previous"
-            onPress={this.handlePrevious}
-            disable={this.state.cardIndex <= 0}
+        {this.state.quizState !== quizState.ended ? (
+          <View style={styles.header}>
+            <Text style={styles.label}>
+              Fail/Success: {this.state.failCount}/{this.state.successCount}
+            </Text>
+            <Text style={styles.label}>
+              Remaining questions:{this.props.cardsCount - this.state.cardIndex}
+            </Text>
+          </View>
+        ) : (
+          <View style={styles.header}>
+            <Text style={[styles.label, styles.endLabel]}>
+              You got{' '}
+              {(
+                (this.state.successCount / this.props.cardsCount) *
+                100
+              ).toFixed(1)}
+              % of the questions right.
+            </Text>
+          </View>
+        )}
+
+        {this.state.quizState !== quizState.ended && (
+          <Card
+            frontText={this.props.cards[this.state.cardIndex].question}
+            backText={this.props.cards[this.state.cardIndex].answer}
+            flip={this.state.flip}
           />
-          <Button
-            text="Next"
-            onPress={this.handleNext}
-            disable={this.state.cardIndex >= this.props.cards.length - 1}
-          />
+        )}
+
+        <View style={styles.quizButtons}>
+          {this.state.quizState === quizState.notRevealed && (
+            <Button
+              text="Reveal Answer"
+              onPress={() =>
+                this.setState({
+                  flip: !this.state.flip,
+                  quizState: quizState.revealed,
+                })
+              }
+            />
+          )}
+          {this.state.quizState === quizState.revealed && (
+            <Button
+              text="Complete Card"
+              onPress={() =>
+                this.setState({
+                  quizState: quizState.markGuess,
+                })
+              }
+            />
+          )}
+          {this.state.quizState === quizState.markGuess && (
+            <Button
+              text="I failed it"
+              fail={true}
+              onPress={() => this.handleGuess(false)}
+            />
+          )}
+          {this.state.quizState === quizState.markGuess && (
+            <Button
+              text="I nailed it"
+              success={true}
+              onPress={() => this.handleGuess(true)}
+            />
+          )}
+
+          {this.state.quizState === quizState.ended && (
+            <Button
+              text="Restart Quiz"
+              restart={true}
+              onPress={this.handleRestart}
+            />
+          )}
+          {this.state.quizState === quizState.ended && (
+            <Button text="Finish Quiz" onPress={this.handleFinish} />
+          )}
         </View>
       </View>
     )
@@ -63,9 +171,12 @@ class Quiz extends Component {
 }
 
 const styles = StyleSheet.create({
-  buttonsContainer: {
+  header: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  quizButtons: {
     flexDirection: 'row',
-    marginTop: 80,
     justifyContent: 'space-between',
     width: '100%',
   },
@@ -91,17 +202,26 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  disabledBtn: {
-    display: 'none',
+  failBtn: {
+    backgroundColor: '#db5757',
   },
-  BtnText: {
+  successBtn: {
+    backgroundColor: '#109160',
+  },
+  restartBtn: {
+    backgroundColor: '#d76c3f',
+  },
+  label: {
     color: '#ffffff',
     fontSize: 16,
     textAlign: 'center',
   },
+  endLabel: {
+    fontSize: 24,
+  },
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     alignItems: 'center',
     paddingRight: 30,
     paddingLeft: 30,
