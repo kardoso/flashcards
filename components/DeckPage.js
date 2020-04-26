@@ -32,7 +32,7 @@ class DeckPage extends Component {
     navigation.push('Quiz', { deckId })
 
     await new Promise((resolve) => setTimeout(resolve, 1000))
-    this.setState(() => ({ addCardDisabled: false }))
+    this.setState(() => ({ startQuizDisabled: false }))
   }
 
   handleAddCard = async (e) => {
