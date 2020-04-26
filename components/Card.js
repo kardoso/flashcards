@@ -1,25 +1,31 @@
 import React from 'react'
-import { StyleSheet, Text, TouchableOpacity } from 'react-native'
-import CardFlip from 'react-native-card-flip'
+import { StyleSheet, Text, View } from 'react-native'
+import FlipCard from 'react-native-flip-card'
 
-export default function Card({ frontText, backText }) {
+export default function Card({ frontText, backText, flip }) {
   return (
-    <CardFlip style={styles.cardContainer} ref={(card) => (this.card = card)}>
-      <TouchableOpacity
-        activeOpacity={1}
-        style={[styles.card, styles.card1]}
-        onPress={() => this.card.flip()}
+    <View style={styles.cardContainer}>
+      <FlipCard
+        friction={8}
+        perspective={1000}
+        flipHorizontal={true}
+        flipVertical={true}
+        flip={flip}
+        clickable={false}
+        onFlipEnd={(isFlipEnd) => {
+          console.log('isFlipEnd', isFlipEnd)
+        }}
       >
-        <Text style={[styles.label, styles.label1]}>{frontText}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        activeOpacity={1}
-        style={[styles.card, styles.card2]}
-        onPress={() => this.card.flip()}
-      >
-        <Text style={[styles.label, styles.label2]}>{backText}</Text>
-      </TouchableOpacity>
-    </CardFlip>
+        {/* Face Side */}
+        <View style={[styles.face, styles.card]}>
+          <Text style={[styles.label, styles.label1]}>{frontText}</Text>
+        </View>
+        {/* Back Side */}
+        <View style={[styles.back, styles.card]}>
+          <Text style={[styles.label, styles.label2]}>{backText}</Text>
+        </View>
+      </FlipCard>
+    </View>
   )
 }
 
@@ -31,21 +37,18 @@ const styles = StyleSheet.create({
   card: {
     width: 320,
     height: 260,
-    backgroundColor: '#8a61cc',
     borderRadius: 16,
-    shadowColor: 'rgba(0,0,0,0.5)',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
+  },
+  face: {
     flex: 1,
     justifyContent: 'center',
-    shadowOpacity: 0.5,
-  },
-  card1: {
+    alignItems: 'center',
     backgroundColor: '#8a61cc',
   },
-  card2: {
+  back: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#ffffff',
   },
   label: {
