@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
-import { StatusBar } from 'react-native'
+import { StatusBar, Text } from 'react-native'
 import { connect } from 'react-redux'
 import { handleInitialData } from './actions/shared'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faPlus, faLayerGroup } from '@fortawesome/free-solid-svg-icons'
 import DashBoard from './components/DashBoard'
 import NewDeck from './components/NewDeck'
 import DeckPage from './components/DeckPage'
@@ -98,15 +100,37 @@ class App extends Component {
     return (
       <NavigationContainer>
         <StatusBar translucent barStyle={'light-content'} />
-        <Tabs.Navigator>
+        <Tabs.Navigator
+          initialRouteName="Decks"
+          tabBarOptions={{
+            activeTintColor: '#8a61cc',
+            inactiveTintColor: '#fff',
+            activeBackgroundColor: '#333435',
+            inactiveBackgroundColor: '#333435',
+            labelStyle: { fontSize: 14 },
+          }}
+        >
           <Tabs.Screen
             name="Decks"
             component={HomeStackScreen}
             options={({ route }) => ({
               tabBarVisible: this.getTabBarVisibility(route),
+              tabBarLabel: 'Your Decks',
+              tabBarIcon: ({ tintColor }) => (
+                <FontAwesomeIcon icon={faLayerGroup} color="#fff" size={24} />
+              ),
             })}
           />
-          <Tabs.Screen name="New" component={NewDeck} />
+          <Tabs.Screen
+            name="New"
+            component={NewDeck}
+            options={() => ({
+              tabBarLabel: 'Add Decks',
+              tabBarIcon: ({ tintColor }) => (
+                <FontAwesomeIcon icon={faPlus} color="#fff" size={24} />
+              ),
+            })}
+          />
         </Tabs.Navigator>
       </NavigationContainer>
     )
