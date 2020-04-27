@@ -23,6 +23,8 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": "Flashcards is an app that helps in studies.\n\nYou can:\n- Create Decks. A deck refers to a study subject;\n- Add cards to a deck. A card is a question with an answer;\n- Play quizzes to test your knowledge of a certain subject.",
+    "githubUrl": "https://github.com/kardoso/flashcards"
   }
 }
