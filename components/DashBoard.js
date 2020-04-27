@@ -45,8 +45,6 @@ class DashBoard extends Component {
     opacity: new Animated.Value(1),
   }
   handleLoadDeck = async (id, name) => {
-    // TODO: Redirect to deck page
-    console.log('Still to implement')
     const { opacity } = this.state
 
     Animated.timing(opacity, { toValue: 0, duration: 1000 }).start()

@@ -14,5 +14,4 @@ const FlashCards = () => (
   </Provider>
 )
 
-//AppRegistry.registerComponent(appName, () => FlashCards)
 AppRegistry.registerComponent('main', () => FlashCards)

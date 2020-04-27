@@ -165,7 +165,6 @@ const styles = StyleSheet.create({
 })
 
 function mapStateToProps({ decks }, props) {
-  //TODO: Remove the forced id
   const deck = decks[props.route.params.id]
   if (typeof deck !== 'undefined') {
     const deckId = deck.id
