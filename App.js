@@ -71,6 +71,7 @@ const HomeStackScreen = () => (
       component={Quiz}
       options={{
         headerTitle: 'Quiz',
+        headerShown: false,
         headerStyle: {
           backgroundColor: gray,
         },
