@@ -37,10 +37,8 @@ Now, if your chose npm just run `npm install` and `npm start` instead.
 <br>
 <br>
 
-This app was tested only on Android.
+This app was tested on Android only.
 
-<br>
-<br>
 <hr>
 
 This project uses [Udacity Git Commit Message Style](https://udacity.github.io/git-styleguide/)
