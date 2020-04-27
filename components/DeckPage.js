@@ -3,11 +3,12 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { BoxShadow } from 'react-native-shadow'
 import { connect } from 'react-redux'
 import { handleRemoveDeck } from '../actions/decks'
+import { white, purple, red, black, gray } from '../utils/colors'
 
 const shadowOpt = {
   width: 300,
   height: 60,
-  color: '#8a61cc',
+  color: purple,
   border: 2,
   radius: 16,
   opacity: 0.45,
@@ -109,10 +110,10 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#1b1d20',
+    backgroundColor: black,
   },
   title: {
-    color: '#fff',
+    color: white,
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
     width: 300,
   },
   subtitle: {
-    color: '#8a61cc',
+    color: purple,
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 40,
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
   button: {
     width: 300,
     height: 30,
-    backgroundColor: '#333435',
+    backgroundColor: gray,
     paddingTop: 30,
     paddingBottom: 30,
     paddingLeft: 40,
@@ -143,23 +144,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonText: {
-    color: '#fff',
+    color: white,
     textAlign: 'center',
     fontSize: 18,
     fontWeight: 'bold',
     padding: 30,
   },
   btnStart: {
-    backgroundColor: '#8a61cc',
+    backgroundColor: purple,
   },
   btnDelete: {
     backgroundColor: 'transparent',
-    borderColor: '#db5757',
+    borderColor: red,
     borderStyle: 'solid',
     borderWidth: 2,
   },
   txtDelete: {
-    color: '#db5757',
+    color: red,
   },
 })
 

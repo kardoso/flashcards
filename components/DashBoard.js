@@ -10,11 +10,12 @@ import {
 import { BoxShadow } from 'react-native-shadow'
 import { connect } from 'react-redux'
 import Constants from 'expo-constants'
+import { white, purple, black, gray } from '../utils/colors'
 
 const shadowOpt = {
   width: 300,
   height: 100,
-  color: '#8a61cc',
+  color: purple,
   border: 2,
   radius: 16,
   opacity: 0.45,
@@ -94,7 +95,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: Constants.statusBarHeight,
-    backgroundColor: '#1b1d20',
+    backgroundColor: black,
     width: '100%',
   },
   list: {
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
   btn: {
     width: 300,
     height: 100,
-    backgroundColor: '#333435',
+    backgroundColor: gray,
     paddingTop: 30,
     paddingBottom: 30,
     paddingLeft: 40,
@@ -120,12 +121,12 @@ const styles = StyleSheet.create({
   },
   textTitle: {
     fontSize: 18,
-    color: '#fff',
+    color: white,
     fontWeight: 'bold',
   },
   textDescription: {
     fontSize: 16,
-    color: '#8a61cc',
+    color: purple,
   },
 })
 

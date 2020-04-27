@@ -9,11 +9,12 @@ import {
 import { BoxShadow } from 'react-native-shadow'
 import { connect } from 'react-redux'
 import { handleAddDeck } from '../actions/decks'
+import { white, purple, black, gray } from '../utils/colors'
 
 const shadowOpt = {
   width: 300,
   height: 65,
-  color: '#8a61cc',
+  color: purple,
   border: 2,
   radius: 16,
   opacity: 0.45,
@@ -70,10 +71,10 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#1b1d20',
+    backgroundColor: black,
   },
   title: {
-    color: '#fff',
+    color: white,
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
@@ -83,14 +84,14 @@ const styles = StyleSheet.create({
   },
   button: {
     width: 300,
-    backgroundColor: '#8a61cc',
+    backgroundColor: purple,
     borderRadius: 16,
     height: 65,
     justifyContent: 'center',
     alignItems: 'center',
   },
   buttonText: {
-    color: '#fff',
+    color: white,
     textAlign: 'center',
     fontSize: 18,
     fontWeight: 'bold',
@@ -99,14 +100,14 @@ const styles = StyleSheet.create({
   input: {
     width: 300,
     fontSize: 18,
-    backgroundColor: '#fff',
+    backgroundColor: white,
     padding: 20,
     borderRadius: 16,
     marginLeft: 10,
     marginRight: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    color: '#333',
+    color: gray,
   },
 })
 

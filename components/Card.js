@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import FlipCard from 'react-native-flip-card'
+import { white, purple } from '../utils/colors'
 
 export default function Card({ frontText, backText, flip }) {
   return (
@@ -43,27 +44,27 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#8a61cc',
+    backgroundColor: purple,
   },
   back: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: white,
   },
   label: {
     lineHeight: 18,
     textAlign: 'center',
     fontSize: 18,
     fontFamily: 'System',
-    color: '#ffffff',
+    color: white,
     backgroundColor: 'transparent',
     margin: 4,
   },
   label1: {
-    color: '#ffffff',
+    color: white,
   },
   label2: {
-    color: '#8a61cc',
+    color: purple,
   },
 })

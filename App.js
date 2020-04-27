@@ -8,6 +8,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faPlus, faLayerGroup } from '@fortawesome/free-solid-svg-icons'
 import { setLocalNotification } from './utils/helpers'
+import { gray, white, purple } from './utils/colors'
 import DashBoard from './components/DashBoard'
 import NewDeck from './components/NewDeck'
 import DeckPage from './components/DeckPage'
@@ -25,9 +26,9 @@ const HomeStackScreen = () => (
       options={{
         headerShown: false,
         headerStyle: {
-          backgroundColor: '#333435',
+          backgroundColor: gray,
         },
-        headerTintColor: '#fff',
+        headerTintColor: white,
         headerTitleStyle: {
           fontWeight: 'bold',
         },
@@ -41,9 +42,9 @@ const HomeStackScreen = () => (
         title: route.params.name,
         tabBarVisible: false,
         headerStyle: {
-          backgroundColor: '#333435',
+          backgroundColor: gray,
         },
-        headerTintColor: '#fff',
+        headerTintColor: white,
         headerTitleStyle: {
           fontWeight: 'bold',
         },
@@ -56,9 +57,9 @@ const HomeStackScreen = () => (
       options={{
         headerTitle: 'New Card',
         headerStyle: {
-          backgroundColor: '#333435',
+          backgroundColor: gray,
         },
-        headerTintColor: '#fff',
+        headerTintColor: white,
         headerTitleStyle: {
           fontWeight: 'bold',
         },
@@ -71,9 +72,9 @@ const HomeStackScreen = () => (
       options={{
         headerTitle: 'Quiz',
         headerStyle: {
-          backgroundColor: '#333435',
+          backgroundColor: gray,
         },
-        headerTintColor: '#fff',
+        headerTintColor: white,
         headerTitleStyle: {
           fontWeight: 'bold',
         },
@@ -105,10 +106,10 @@ class App extends Component {
         <Tabs.Navigator
           initialRouteName="Decks"
           tabBarOptions={{
-            activeTintColor: '#8a61cc',
-            inactiveTintColor: '#fff',
-            activeBackgroundColor: '#333435',
-            inactiveBackgroundColor: '#333435',
+            activeTintColor: purple,
+            inactiveTintColor: white,
+            activeBackgroundColor: gray,
+            inactiveBackgroundColor: gray,
             labelStyle: { fontSize: 14 },
           }}
         >
@@ -119,7 +120,7 @@ class App extends Component {
               tabBarVisible: this.getTabBarVisibility(route),
               tabBarLabel: 'Your Decks',
               tabBarIcon: ({ tintColor }) => (
-                <FontAwesomeIcon icon={faLayerGroup} color="#fff" size={24} />
+                <FontAwesomeIcon icon={faLayerGroup} color={white} size={24} />
               ),
             })}
           />
@@ -129,7 +130,7 @@ class App extends Component {
             options={() => ({
               tabBarLabel: 'Add Decks',
               tabBarIcon: ({ tintColor }) => (
-                <FontAwesomeIcon icon={faPlus} color="#fff" size={24} />
+                <FontAwesomeIcon icon={faPlus} color={white} size={24} />
               ),
             })}
           />
