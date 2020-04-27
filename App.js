@@ -7,6 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faPlus, faLayerGroup } from '@fortawesome/free-solid-svg-icons'
+import { setLocalNotification } from './utils/helpers'
 import DashBoard from './components/DashBoard'
 import NewDeck from './components/NewDeck'
 import DeckPage from './components/DeckPage'
@@ -84,6 +85,7 @@ const HomeStackScreen = () => (
 class App extends Component {
   componentDidMount() {
     this.props.dispatch(handleInitialData())
+    setLocalNotification()
   }
 
   getTabBarVisibility(route) {

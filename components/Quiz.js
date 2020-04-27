@@ -7,6 +7,7 @@ import {
   Platform,
 } from 'react-native'
 import { connect } from 'react-redux'
+import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
 import Card from './Card'
 
 function Button({ text, onPress, fail, success, restart }) {
@@ -82,6 +83,8 @@ class Quiz extends Component {
     const { navigation } = this.props
 
     navigation.goBack()
+
+    clearLocalNotification().then(setLocalNotification)
   }
 
   render() {
