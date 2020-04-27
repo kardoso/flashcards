@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   FlatList,
+  Animated,
 } from 'react-native'
 import { BoxShadow } from 'react-native-shadow'
 import { connect } from 'react-redux'
@@ -22,26 +23,44 @@ const shadowOpt = {
   style: { marginBottom: 30 },
 }
 
-function DeckItem({ deckId, name, itemsAmount, onPress }) {
+function DeckItem({ deckId, name, itemsAmount, onPress, opacity }) {
   return (
-    <BoxShadow setting={shadowOpt}>
-      <TouchableOpacity style={styles.btn} onPress={() => onPress({ deckId })}>
-        <Text style={styles.textTitle}>{name}</Text>
-        <Text style={styles.textDescription}>{itemsAmount} Cards</Text>
-      </TouchableOpacity>
-    </BoxShadow>
+    <Animated.View style={{ opacity }}>
+      <BoxShadow setting={shadowOpt}>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => onPress({ deckId })}
+        >
+          <Text style={styles.textTitle}>{name}</Text>
+          <Text style={styles.textDescription}>{itemsAmount} Cards</Text>
+        </TouchableOpacity>
+      </BoxShadow>
+    </Animated.View>
   )
 }
 
 class DashBoard extends Component {
-  handleLoadDeck = (id, name) => {
+  state = {
+    opacity: new Animated.Value(1),
+  }
+  handleLoadDeck = async (id, name) => {
     // TODO: Redirect to deck page
     console.log('Still to implement')
+    const { opacity } = this.state
+
+    Animated.timing(opacity, { toValue: 0, duration: 1000 }).start()
+
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+
     this.props.navigation.push('Deck', { id, name })
+
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+    Animated.timing(opacity, { toValue: 1, duration: 0 }).start()
   }
 
   render() {
     const { decks } = this.props
+    const { opacity } = this.state
     return (
       <View style={styles.container}>
         <FlatList
@@ -56,6 +75,7 @@ class DashBoard extends Component {
                 deckId={decks[item].id}
                 name={decks[item].name}
                 itemsAmount={decks[item].cards.length}
+                opacity={opacity}
                 onPress={() =>
                   this.handleLoadDeck(decks[item].id, decks[item].name)
                 }
