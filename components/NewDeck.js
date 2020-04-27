@@ -29,15 +29,24 @@ class NewDeck extends Component {
     submitDisabled: false,
   }
 
-  saveDeck = async (e) => {
-    e.preventDefault()
+  saveDeck = async () => {
     this.setState(() => ({ name: '', submitDisabled: true }))
 
-    const { dispatch, navigation } = this.props
+    const { dispatch } = this.props
     await dispatch(handleAddDeck({ name: this.state.name }))
 
     this.setState(() => ({ name: '', submitDisabled: false }))
-    navigation.navigate('Decks')
+  }
+
+  showDeck = () => {
+    const { decks, navigation } = this.props
+    const deck = decks[Object.keys(decks)[Object.keys(decks).length - 1]]
+    navigation.navigate('Deck', { id: deck.id, name: deck.name })
+  }
+
+  submitDeck = async (e) => {
+    e.preventDefault()
+    this.saveDeck().then(this.showDeck)
   }
 
   render() {
@@ -54,7 +63,7 @@ class NewDeck extends Component {
         <BoxShadow setting={shadowOpt}>
           <TouchableOpacity
             style={styles.button}
-            onPress={this.saveDeck}
+            onPress={this.submitDeck}
             disabled={this.state.submitDisabled}
           >
             <Text style={styles.buttonText}>Submit</Text>
@@ -111,4 +120,8 @@ const styles = StyleSheet.create({
   },
 })
 
-export default connect()(NewDeck)
+function mapStateToProps({ decks }) {
+  return { decks }
+}
+
+export default connect(mapStateToProps)(NewDeck)
