@@ -94,10 +94,14 @@ class Quiz extends Component {
         {this.state.quizState !== quizState.ended ? (
           <View style={styles.header}>
             <Text style={styles.label}>
-              Fail/Success: {this.state.failCount}/{this.state.successCount}
+              Remaining questions:{this.props.cardsCount - this.state.cardIndex}
             </Text>
             <Text style={styles.label}>
-              Remaining questions:{this.props.cardsCount - this.state.cardIndex}
+              Fail: <Text style={styles.failText}>{this.state.failCount}</Text>
+            </Text>
+            <Text style={styles.label}>
+              Success:{' '}
+              <Text style={styles.successText}>{this.state.successCount}</Text>
             </Text>
           </View>
         ) : (
@@ -214,6 +218,12 @@ const styles = StyleSheet.create({
   },
   restartBtn: {
     backgroundColor: orange,
+  },
+  failText: {
+    color: red,
+  },
+  successText: {
+    color: green,
   },
   label: {
     color: white,
